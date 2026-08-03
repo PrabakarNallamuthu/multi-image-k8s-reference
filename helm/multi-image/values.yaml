@@ -2,21 +2,27 @@ namespace: demo
 deployment:
   strategy: RollingUpdate
 images:
-- name: service-a
+- name: frontend
   repository: nginx
   tag: latest
-  replicas: 2
+  replicas: 1
   containerPort: 80
   service: {enabled: true, port: 80}
-- name: service-b
+- name: backend
+  repository: hashicorp/http-echo
+  tag: latest
+  replicas: 1
+  containerPort: 80
+  service: {enabled: true, port: 80}
+- name: cache
   repository: redis
   tag: latest
   replicas: 1
   containerPort: 6379
   service: {enabled: true, port: 6379}
-- name: service-c
-  repository: httpd
+- name: queue
+  repository: rabbitmq
   tag: latest
-  replicas: 2
+  replicas: 1
   containerPort: 80
   service: {enabled: true, port: 80}
