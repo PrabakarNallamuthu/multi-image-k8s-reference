@@ -1,0 +1,15 @@
+{{- range .Values.images }}
+{{- if .service.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+  - port: {{ .service.port }}
+    targetPort: {{ .containerPort }}
+{{- end }}
+{{- end }}

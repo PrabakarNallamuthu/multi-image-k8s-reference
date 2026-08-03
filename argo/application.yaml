@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: multi-image
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/<your-org>/multi-image-k8s-reference
+    targetRevision: main
+    path: helm/multi-image
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
