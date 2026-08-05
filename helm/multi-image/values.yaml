@@ -1,28 +1,28 @@
 namespace: demo
+
 deployment:
-  strategy: RollingUpdate
-images:
-- name: frontend
-  repository: nginx
-  tag: latest
+  name: multi-container-app
   replicas: 1
-  containerPort: 80
-  service: {enabled: true, port: 80}
-- name: backend
-  repository: hashicorp/http-echo
-  tag: latest
-  replicas: 1
-  containerPort: 80
-  service: {enabled: true, port: 80}
-- name: cache
-  repository: redis
-  tag: latest
-  replicas: 1
-  containerPort: 6379
-  service: {enabled: true, port: 6379}
-- name: queue
-  repository: rabbitmq
-  tag: latest
-  replicas: 1
-  containerPort: 80
-  service: {enabled: true, port: 80}
+
+containers:
+  - name: frontend
+    repository: nginx
+    tag: latest
+    containerPort: 80
+
+  - name: backend
+    repository: hashicorp/http-echo
+    tag: latest
+    containerPort: 5678
+    args:
+      - "-text=Hello from Backend"
+
+  - name: cache
+    repository: redis
+    tag: latest
+    containerPort: 6379
+
+  - name: queue
+    repository: rabbitmq
+    tag: latest
+    containerPort: 5672
