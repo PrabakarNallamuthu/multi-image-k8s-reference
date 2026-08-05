@@ -1,20 +1,27 @@
-{{- range .Values.images }}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .name }}
+  name: {{ .Values.deployment.name }}
 spec:
-  replicas: {{ .replicas }}
+  replicas: {{ .Values.deployment.replicas }}
   selector:
-    matchLabels: {app: {{ .name }}}
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+
   template:
     metadata:
-      labels: {app: {{ .name }}}
+      labels:
+        app: {{ .Values.deployment.name }}
+
     spec:
       containers:
-      - name: {{ .name }}
-        image: "{{ .repository }}:{{ .tag }}"
-        ports:
-        - containerPort: {{ .containerPort }}
+{{- range .Values.containers }}
+        - name: {{ .name }}
+          image: "{{ .repository }}:{{ .tag }}"
+{{- if .args }}
+          args:
+{{ toYaml .args | indent 12 }}
+{{- end }}
+          ports:
+            - containerPort: {{ .containerPort }}
 {{- end }}
