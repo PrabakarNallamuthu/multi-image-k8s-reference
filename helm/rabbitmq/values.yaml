@@ -1,10 +1,10 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: latest
+  repository: rabbitmq
+  tag: 3-management
   pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  port: 80
+  port: 5672
