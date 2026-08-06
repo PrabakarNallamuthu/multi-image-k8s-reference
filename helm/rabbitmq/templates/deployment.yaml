@@ -18,7 +18,7 @@ spec:
 
     spec:
       containers:
-      - name: frontend
+      - name: rabbitmq
 
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
 
